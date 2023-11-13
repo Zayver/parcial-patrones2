@@ -1,6 +1,6 @@
 package com.zayver.parcial.controller;
 
-import com.zayver.parcial.bridge.encrypt.IEncrypt;
+import com.zayver.parcial.bridge.encrypt.BridgeMessageEncryption;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,13 +17,13 @@ import java.util.Map;
 @Slf4j
 public class EncryptController {
     @Autowired
-    private IEncrypt iEncrypt;
+    private BridgeMessageEncryption bridgeMessageEncryption;
 
     @PostMapping
     public Map<String, String> encryptMessage(@RequestBody Map<String, String> req){
         String res;
         try {
-            res = iEncrypt.encrypt(req.get("message"), req.get("password"));
+            res = bridgeMessageEncryption.encrypt(req.get("message"), req.get("password"));
         } catch (Exception e) {
             log.error("ERROR: {}", e.getMessage());
             throw new ResponseStatusException(HttpStatus.I_AM_A_TEAPOT, e.getMessage());

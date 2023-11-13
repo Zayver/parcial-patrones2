@@ -1,0 +1,25 @@
+@startuml
+
+class IEncryptFactory{
+    -@Bean IEncrypt: iEncrypt()
+}
+IEncryptFactory -- IEncrypt
+interface IEncrypt
+
+interface IMessageEncrypt
+
+class BridgeMessageEncryption{
+    -iE: IEncrypt
+}
+IEncrypt .. BridgeMessageEncryption
+
+BridgeMessageEncryption ..|> IMessageEncrypt
+
+AESEncrypt ..|> IEncrypt
+DesEncrypt ..|> IEncrypt
+NoEncrypt ..|> IEncrypt
+
+EncryptController -- BridgeMessageEncryption
+
+
+@enduml

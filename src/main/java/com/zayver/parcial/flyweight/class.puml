@@ -1,0 +1,18 @@
+@startuml
+
+class SongEntity
+
+SongEntity -- "byte[]"
+
+class SongFactory{
+    - pool: HashMap<String, SongEntity>
+}
+HashMap --o SongFactory
+
+HashMap -- SongEntity
+
+class SongController
+
+SongController -- SongFactory
+
+@enduml

@@ -1,0 +1,50 @@
+@startuml
+
+package domain{
+    class Employee
+    class Job
+}
+
+package application.port{
+    package in{
+        interface EmployeeInputPort
+        interface JobInputPort
+    }
+    package out{
+        interface EmployeeOutputPort
+        interface JobOutputPort
+    }
+}
+
+package postgresOutputAdapter{
+    package adapter{
+        EmployeeOutputAdapter ..|> EmployeeOutputPort
+        JobOutputAdapter ..|> JobOutputPort
+    }
+}
+
+package restOutputAdapter{
+    package adapter{
+        class EmployeeInputAdapter
+        class JobInputAdapter
+        EmployeeInputAdapter -- EmployeeOutputPort
+        EmployeeInputAdapter -- JobOutputPort
+        JobInputAdapter -- JobOutputPort
+        EmployeeInputAdapter ..|> EmployeeInputPort
+        JobInputAdapter ..|> JobInputPort
+    }
+
+    package controller{
+        EmployeeController -- EmployeeInputAdapter
+        JobController -- JobInputAdapter
+    }
+}
+
+application.port -- domain
+
+postgresOutputAdapter.adapter -- domain
+
+restOutputAdapter.adapter -- domain
+
+
+@enduml
